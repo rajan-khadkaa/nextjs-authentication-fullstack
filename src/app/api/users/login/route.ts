@@ -28,10 +28,12 @@ export async function POST(req: NextRequest) {
         const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
           expiresIn: "1d",
         });
-        return NextResponse.json(
+        const response = NextResponse.json(
           { message: "Successful login", success: true, tokenData },
           { status: 200 }
         );
+        response.cookies.set("token", token, { httpOnly: true });
+        return response;
       } else {
         return NextResponse.json(
           { error: "Incorrect Password" },

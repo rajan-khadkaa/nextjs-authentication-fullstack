@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 
 export default function Login() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -16,16 +17,19 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await axios.post("/api/users/login", user);
       if (response.data.success) {
-        alert("successful login");
+        // alert("successful login");
         toast.success("Login successful");
         console.log("User info: ", response.data.user);
-        router.push(`/profile/${response.data.user}`);
+        router.push(`/profile`);
       }
+      setLoading(false);
     } catch (error: any) {
       alert(error.response.data.error);
       console.log("error message: ", error);
+      setLoading(false);
     }
   };
 
@@ -57,10 +61,15 @@ export default function Login() {
           placeholder="Password"
         />
         <button
+          disabled={loading}
           type="submit"
-          className="p-4 text-center w-full bg-gray-800 hover:bg-gray-600"
+          className={`${
+            loading
+              ? "bg-gray-500 hover:bg-gray-500"
+              : "bg-gray-800 hover:bg-gray-600"
+          } p-4 text-center w-full`}
         >
-          Login
+          {loading ? "Loggin in..." : "Login"}
         </button>
         {/* <button type="submit" className="p-4 text-center w-full bg-gray-800 hover:bg-gray-600"></button> */}
         <span>

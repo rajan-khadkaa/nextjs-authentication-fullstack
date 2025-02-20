@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 import axios from "axios";
 
 export default function Signup() {
@@ -14,35 +14,31 @@ export default function Signup() {
     password: "",
   });
 
-  const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (
-      user.username.length > 0 &&
-      user.email.length > 0 &&
-      user.password.length > 0
-    ) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
-  }, [user]);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      const response = await axios.post("/api/users/signup", user);
-      console.log("Sucessful signup. Response data: ", response.data);
-      router.push("/login");
-    } catch (error: any) {
-      console.log("SignUp error: ", error.message);
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
+    if (
+      user.username.trim().length === 0 ||
+      user.email.trim().length === 0 ||
+      user.password.trim().length === 0
+    ) {
+      alert("Please fill up all fields.");
+      return; // Stop further execution if validation fails
+    } else {
+      try {
+        setLoading(true);
+        const response = await axios.post("/api/users/signup", user);
+        console.log("Sucessful signup. Response data: ", response.data);
+        router.push("/login");
+        toast.success("Signup successful");
+        setLoading(false);
+      } catch (error: any) {
+        console.log("SignUp error: ", error.message);
+        toast.error(error.message);
+        setLoading(true);
+      }
     }
-    // alert(`Hello ${user.username}!`);
   };
 
   return (
@@ -83,10 +79,15 @@ export default function Signup() {
           placeholder="Password"
         />
         <button
+          disabled={loading}
           type="submit"
-          className="p-4 text-center w-full bg-gray-800 hover:bg-gray-600"
+          className={`${
+            loading
+              ? "bg-gray-500 hover:bg-gray-500"
+              : "bg-gray-800 hover:bg-gray-600"
+          } p-4 text-center w-full`}
         >
-          {buttonDisabled ? "No signup" : "Sign Up"}
+          {loading ? "Signing up..." : "Sign Up"}
         </button>
         {/* <button type="submit" className="p-4 text-center w-full bg-gray-800 hover:bg-gray-600"></button> */}
         <span>
