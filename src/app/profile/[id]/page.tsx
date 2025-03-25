@@ -2,12 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
 
 function Page() {
   const router = useRouter();
-  const params = useParams();
+  const params = useParams<{ id: string }>();
   const [user, setUser] = useState({ username: "", email: "" });
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function Page() {
   return (
     <div className="w-full h-[100vh] relative">
       <div className="mx-40 mt-20 flex flex-col gap-8">
-        <img
+        <Image
           className="size-[100px] rounded-full object-cover object-center border-2 border-white/40"
           src="https://images.unsplash.com/photo-1530452540414-c17a65a637fe?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTExfHxwcm9maWxlJTIwcG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
           alt="profile image"
@@ -76,7 +76,7 @@ export default Page;
 //   return (
 //     <div className="w-full h-[100vh] relative">
 //       <div className="mx-40 mt-20 flex flex-col gap-8">
-//         <img
+//         <Image
 //           className="size-[100px] rounded-full object-cover object-center border-2 border-white/40"
 //           src="https://images.unsplash.com/photo-1516651000622-7f32fe80a57a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 //           alt="profile image"
