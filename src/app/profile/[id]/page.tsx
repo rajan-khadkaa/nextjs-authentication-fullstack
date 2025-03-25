@@ -20,8 +20,11 @@ function Page() {
       try {
         await axios.get("/api/users/logout");
         router.push("/login");
-      } catch (error: any) {
-        console.log("Error: ", error.message);
+      } catch (error) {
+        console.log(
+          "Error: ",
+          error instanceof Error ? error.message : "Unknown error"
+        );
       }
     }
   };
@@ -30,8 +33,11 @@ function Page() {
     try {
       const res = await axios.get(`/api/users/${params.id}`);
       setUser(res.data.user);
-    } catch (error: any) {
-      console.log("Error: ", error.message);
+    } catch (error) {
+      console.log(
+        "Error: ",
+        error instanceof Error ? error.message : "Unknown error"
+      );
     }
   };
 

@@ -33,10 +33,11 @@ export default function Signup() {
         router.push("/login");
         toast.success("Signup successful");
         setLoading(false);
-      } catch (error: any) {
-        console.log("SignUp error: ", error.message);
-        toast.error(error.message);
-        setLoading(true);
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Something went wrong";
+        console.log("Error:", errorMessage);
+        toast.error(errorMessage);
       }
     }
   };

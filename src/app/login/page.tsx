@@ -26,9 +26,11 @@ export default function Login() {
         router.push(`/profile`);
       }
       setLoading(false);
-    } catch (error: any) {
-      alert(error.response.data.error);
-      console.log("error message: ", error);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Something went wrong";
+      console.log("Error:", errorMessage);
+      toast.error(errorMessage);
       setLoading(false);
     }
   };

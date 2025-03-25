@@ -10,6 +10,7 @@ function Page() {
 
   useEffect(() => {
     getUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getUserData = async () => {
@@ -17,8 +18,11 @@ function Page() {
       const res = await axios.get("/api/users/loggedUser");
       setUser(res.data.user);
       console.log("User info received from backend: ", res.data.user);
-    } catch (error: any) {
-      console.log("Error: ", error.message);
+    } catch (error) {
+      console.log(
+        "Error: ",
+        error instanceof Error ? error.message : "Unknown error"
+      );
     }
   };
 
@@ -28,8 +32,11 @@ function Page() {
       try {
         await axios.get("/api/users/logout");
         router.push("/login");
-      } catch (error: any) {
-        console.log("Error: ", error.message);
+      } catch (error) {
+        console.log(
+          "Error: ",
+          error instanceof Error ? error.message : "Unknown error"
+        );
       }
     }
   };
