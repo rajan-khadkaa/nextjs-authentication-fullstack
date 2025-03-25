@@ -1,13 +1,13 @@
 # Fullstack Authentication with Next.js
 
-This is a simple fullstack authentication system built with Next.js.
+This is a simple fullstack authentication system built with Next.js. [Demo] (https://nextjs-authentication-fullstack.vercel.app/)
 
 ## Features
 
 - User registration and login
 - Password hashing for security
 - JWT for session management
-- Protected routes
+- Protected routes using middleware
 
 ### Tools and Libraries Used
 
